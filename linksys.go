@@ -23,14 +23,14 @@ func NewLinksys(host string, user string, password string) *Linksys {
 	return l
 }
 
-func (l *Linksys) GenURL(category string, action string) string {
+func (l *Linksys) genURL(category string, action string) string {
 	return fmt.Sprintf("http://linksys.com/jnap/%s/%s", category, action)
 }
 
 func (l *Linksys) prepareRequest(category string, action string) *gorequest.SuperAgent {
 	request := gorequest.New()
 	return request.Post(l.jnapUrl).
-		Set("X-JNAP-ACTION", l.GenURL(category, action)).
+		Set("X-JNAP-ACTION", l.genURL(category, action)).
 		Set("X-JNAP-Authorization", l.headerAuth)
 }
 
@@ -55,7 +55,7 @@ func (l *Linksys) MakeRequestWithBody(category string, action string, body strin
 }
 
 func (l *Linksys) MakeRequestTransaction(category string, action string, request string) string {
-	coreAction := l.GenURL(category, action)
+	coreAction := l.genURL(category, action)
 	body := fmt.Sprintf(`[{"action": "%s", "request": %s}]`, coreAction, request)
 	return l.MakeRequestWithBody("core", "Transaction", body)
 }
