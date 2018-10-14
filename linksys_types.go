@@ -26,30 +26,25 @@ type RadioOutput struct {
 }
 
 type Radio struct {
-	RadioId                string        `json:"radioID"`
-	PhysicalRadioID        string        `json:"physicalRadioID"`
-	BSSID                  string        `json:"bssid"`
-	Band                   string        `json:"band"`
-	SupportedModes         []string      `json:"supportedModes"`
-	SupportedChannels      []int         `json:"supportedChannels"`
-	SupportedWideChannels  []int         `json:"supportedWideChannels"`
-	SupportedSecurityTypes []string      `json:"supportedSecurityTypes"`
-	MaxSharedKeyLength     int           `json:"maxRADIUSSharedKeyLength"`
-	Settings               RadioSettings `json:"settings"`
+	RadioId  string        `json:"radioID"`
+	Settings RadioSettings `json:"settings"`
 }
 
 type RadioRequest struct {
-	Action string          `json:"action"`
-	Radios []RadioSettings `json:"request.radios"`
+	Radios []Radio `json:"radios"`
 }
 
 type RadioSettings struct {
-	SSID          string `json:"ssid"`
-	BroadcastSSID bool   `json:"broadcastSSID"`
-	Channel       int    `json:"channel"`
-	ChannelWidth  string `json:"channelWidth"`
-	Enabled       bool   `json:"isEnabled"`
-	Mode          string `json:"mode"`
-	Security      string `json:"security"`
-	Passphrase    string `json:"wpaPersonalSettings.passphrase"`
+	SSID                string              `json:"ssid"`
+	BroadcastSSID       bool                `json:"broadcastSSID"`
+	Channel             int                 `json:"channel"`
+	ChannelWidth        string              `json:"channelWidth"`
+	Enabled             bool                `json:"isEnabled"`
+	Mode                string              `json:"mode"`
+	Security            string              `json:"security"`
+	WPAPersonalSettings WPAPersonalSettings `json:"wpaPersonalSettings"`
+}
+
+type WPAPersonalSettings struct {
+	Passphrase string `json:"passphrase"`
 }
