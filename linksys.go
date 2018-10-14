@@ -27,17 +27,23 @@ func (l *Linksys) genURL(category string, action string) string {
 	return fmt.Sprintf("http://linksys.com/jnap/%s/%s", category, action)
 }
 
-func (l *Linksys) MakeRequest(category string, action string, withBody bool) string {
-	var body string = ``
-	if withBody {
-		body = `{"firstEntryIndex": 1,"entryCount": 255}`
-	}
-
+func (l *Linksys) prepareRequest(category string, action string) *gorequest.SuperAgent {
 	request := gorequest.New()
-	_, body, err := request.
-		Post(l.jnapUrl).
+	return request.Post(l.jnapUrl).
 		Set("X-JNAP-ACTION", l.genURL(category, action)).
-		Set("X-JNAP-Authorization", l.headerAuth).
+		Set("X-JNAP-Authorization", l.headerAuth)
+}
+
+func (l *Linksys) MakeRequest(category string, action string) string {
+	_, body, err := l.prepareRequest(category, action).End()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return body
+}
+
+func (l *Linksys) MakeRequestWithBody(category string, action string, body string) string {
+	_, body, err := l.prepareRequest(category, action).
 		Send(body).
 		End()
 
@@ -46,4 +52,11 @@ func (l *Linksys) MakeRequest(category string, action string, withBody bool) str
 	}
 
 	return body
+}
+
+func (l *Linksys) MakeRequestTransaction(category string, action string) string {
+	coreAction := l.genURL(category, action)
+	body := fmt.Sprintf(`[{"action": "%s", "request": {}}]`, coreAction)
+
+	return l.MakeRequestWithBody("core", "Transaction", body)
 }
