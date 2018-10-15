@@ -22,13 +22,13 @@ var (
 const sleepTime = 30 * time.Minute
 
 // Mainloop to scan for inc. connections
-func Scan() {
+func ScanIncConnections() {
 	fmt.Println("[*] Launching Scan for incoming connections...")
 	var incEntries []Entry
 	for {
 		incEntries = *linksys.GetIncomingEntries()
 
-		if len(incEntries) == 0 {
+		if len(incEntries) > 0 {
 			// Positive
 			if !alreadySent {
 				bytes, _ := json.Marshal(incEntries)

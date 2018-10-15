@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/spectre.min.css">
+  <link rel="stylesheet" href="/static/theme.css">
+  <title>Linksys Hack Tools</title>
+</head>
+
+<body>
+  <main class="container">
+    <div class="columns">
+      <div class="column col-6 col-mx-auto">
+        <div class="title text-center">
+          <img class="logo" src="/static/images/router.svg" alt="Router">
+          <h1>Linksys Hack Tools</kbd></h1>
+        </div>
+        <div class="empty columns">
+          <div class="column">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title h5">Wireless Channel</div>
+                <p>Current channel is <span class="chip">{{.Channel}}</span></p>
+              </div>
+              <div class="card-body">
+                <a href="/autochan" class="btn btn-success">Auto Switch channel</a>
+              </div>
+            </div>
+          </div>
+          <div class="column">
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title h5">Incoming connections</div>
+                <p class="card-subtitle text-gray">Count: <span class="chip">{{.CountIncoming}}</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>
