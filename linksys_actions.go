@@ -51,18 +51,14 @@ func (l *Linksys) AutoSwitchChannel() int {
 
 // Choose a random channel inside the desired channels
 func pickUnusedChannel(currentChannel int) int {
+	var randIndex int
 	rand.Seed(time.Now().Unix())
-	channelsRemain := remove(desiredChannels, currentChannel)
-	randIndex := rand.Int() % len(channelsRemain)
-	return desiredChannels[randIndex]
-}
+	unusedChan := currentChannel
 
-// Remove element int from array
-func remove(arr []int, val int) []int {
-	for i, v := range arr {
-		if v == val {
-			return append(arr[:i], arr[i+1:]...)
-		}
+	for unusedChan == currentChannel {
+		randIndex = rand.Int() % len(desiredChannels)
+		unusedChan = desiredChannels[randIndex]
 	}
-	return arr
+
+	return unusedChan
 }
